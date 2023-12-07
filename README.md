@@ -1,4 +1,4 @@
-# FoodClassifierAI: FoodIdentifier
+# FoodClassifierAI: Food Identifier
 FoodClassifierAI: A streamlined end-to-end machine learning project seamlessly classifying diverse dishes using deep learning, bringing simplicity and accuracy to food image recognition
 
 Welcome to FoodClassifierAI, an end-to-end machine learning project designed for seamless food image recognition using deep learning techniques. This project allows you to classify a variety of dishes with simplicity and high accuracy.
