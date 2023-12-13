@@ -15,7 +15,7 @@ from tensorflow.keras.utils import load_img
 from tensorflow.keras.utils import img_to_array
 from keras.applications.vgg19 import preprocess_input
 from keras.applications.vgg19 import decode_predictions
-from keras.applications.vgg19 import VGG16
+from keras.applications.vgg19 import VGG19
 from keras.preprocessing import image
 from keras.applications.imagenet_utils import preprocess_input, decode_predictions
 from keras.models import load_model
