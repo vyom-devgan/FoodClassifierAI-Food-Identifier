@@ -9,7 +9,7 @@ import pickle
 import numpy as np
 import os
 
-
+import tensorflow as tf
 # Keras
 from tensorflow.keras.utils import load_img
 from tensorflow.keras.utils import img_to_array
@@ -17,7 +17,7 @@ from keras.applications.vgg19 import preprocess_input
 from keras.applications.vgg19 import decode_predictions
 from keras.applications.vgg19 import VGG19
 from keras.preprocessing import image
-from keras.applications.imagenet_utils import preprocess_input, decode_predictions
+from keras.applications.imagenet_utils import preprocess_input # , decode_predictions
 from keras.models import load_model
 
 # Flask utils
@@ -32,7 +32,7 @@ VGG_PATH = 'vgg19_xgb_model.pkl' #'model_vgg.h5'
 
 # Load your trained model
 with open(VGG_PATH, 'rb') as file:
-    xgb =pickle.load(VGG_PATH)
+    xgb =pickle.load(file)
 
 vgg19 = tf.keras.applications.VGG19(include_top=False, weights='imagenet',input_shape=(224,224,3))
 vgg19.trainable=False
@@ -61,6 +61,22 @@ def model_predict(img_path, model):
 
     return preds
 
+def decode_predictions(prediction):
+    class_names = {0: 'apple_pie',
+                   1: 'baby_back_ribs',
+                   2: 'baklava',
+                   3: 'beef_carpaccio',
+                   4: 'beef_tartare',
+                   5: 'beet_salad',
+                   6: 'beignets',
+                   7: 'bibimbap',
+                   8: 'bread_pudding',
+                   9: 'breakfast_burrito'}
+    if prediction[0] in class_names:
+        return f"The image is {class_names[prediction[0]]}"
+    else:
+        return f"Food not found in class names."
+
 
 @app.route('/', methods=['GET'])
 def index():
@@ -81,16 +97,16 @@ def upload():
         f.save(file_path)
 
         # Make prediction
-        preds = model_predict(file_path, model)
+        preds = model_predict(file_path, xgb)
         
         # convert the probabilities to class labels
         label = decode_predictions(preds)
         # retrieve the most likely result, e.g. highest probability
-        label=label[0][0] 
+        # label=label[0][0] 
        #result=label[1]
-        result='%s( %.2f%%)' % (label[1],label[2]*100)
+        # result='%s( %.2f%%)' % (label[1],label[2]*100)
 
-        return result
+        return label
     return None
 
 if __name__ == '__main__':
