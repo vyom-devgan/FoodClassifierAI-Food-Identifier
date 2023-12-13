@@ -19,6 +19,6 @@ git lfs install
 git lfs pull
 
 # run the model
-python3 main.py
+python3 main-vers2.py
 
 
