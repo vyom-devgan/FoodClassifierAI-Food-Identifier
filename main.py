@@ -26,7 +26,7 @@ from gevent.pywsgi import WSGIServer
 
 
 #Saved model weights
-MODEL_PATH = 'model_vgg.h5'
+MODEL_PATH = 'vgg19_xgb_model.pkl' #'model_vgg.h5'
 
 # Load your trained model
 model =load_model(MODEL_PATH)
