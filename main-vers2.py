@@ -13,9 +13,9 @@ import os
 # Keras
 from tensorflow.keras.utils import load_img
 from tensorflow.keras.utils import img_to_array
-from keras.applications.vgg16 import preprocess_input
-from keras.applications.vgg16 import decode_predictions
-from keras.applications.vgg16 import VGG16
+from keras.applications.vgg19 import preprocess_input
+from keras.applications.vgg19 import decode_predictions
+from keras.applications.vgg19 import VGG16
 from keras.preprocessing import image
 from keras.applications.imagenet_utils import preprocess_input, decode_predictions
 from keras.models import load_model
@@ -28,13 +28,14 @@ from gevent.pywsgi import WSGIServer
 
 #Saved model weights
 VGG_PATH = 'vgg19_xgb_model.pkl' #'model_vgg.h5'
-XGB_PATH = 'xgb_model.pkl'
+# XGB_PATH = 'xgb_model.pkl'
 
 # Load your trained model
 with open(VGG_PATH, 'rb') as file:
-    vgg19 =load_model(VGG_PATH)
-with open(XGB_PATH, 'rb') as file:
-    xgb = load_model(XGB_PATH)
+    xgb =pickle.load(VGG_PATH)
+
+vgg19 = tf.keras.applications.VGG19(include_top=False, weights='imagenet',input_shape=(224,224,3))
+vgg19.trainable=False
 
 # model.make_predict_function()
 

@@ -32,9 +32,9 @@ XGB_PATH = 'xgb_model.pkl'
 
 # Load your trained model
 with open(VGG_PATH, 'rb') as file:
-    vgg19 =load_model(VGG_PATH)
+    vgg19 = pickle.load(VGG_PATH)
 with open(XGB_PATH, 'rb') as file:
-    xgb = load_model(XGB_PATH)
+    xgb = pikle.load(XGB_PATH)
 
 # model.make_predict_function()
 
