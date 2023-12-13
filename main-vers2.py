@@ -42,15 +42,22 @@ with open(XGB_PATH, 'rb') as file:
 app = Flask(__name__)
         
 def model_predict(img_path, model):
-    image = load_img(img_path, target_size=(224, 224))
-    
-    # convert the image pixels to a numpy array
-    image = img_to_array(image)
-    # reshape data for the model
-    image = image.reshape((1, image.shape[0], image.shape[1], image.shape[2]))
-    # prepare the image for the VGG model
-    image = preprocess_input(image)
-    preds = model.predict(image)
+
+    # Preprocess the image
+    img = load_img(img_path, target_size=(224, 224))
+    img_array = image.img_to_array(img)
+    img_array_expanded = np.expand_dims(img_array, axis=0)
+    img_preprocessed = preprocess_input(img_array_expanded)
+
+    # Feature Extraction
+    features = vgg19.predict(img_preprocessed)
+
+    # Flatten the features
+    features_flat = features.reshape(1, -1)
+
+    # Make a prediction
+    preds = xgb.predict(features_flat)
+
     return preds
 
 
